@@ -7,7 +7,7 @@
     "routes": [
       {
         "src": "/(.*)",
-        "dest": "VMS_DRF_2/wsgi.py"
+        "dest": "django_project/wsgi.py"
       }
     ]
 }
