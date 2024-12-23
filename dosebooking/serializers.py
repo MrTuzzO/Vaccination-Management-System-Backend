@@ -59,3 +59,11 @@ class CampaignReviewSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("You have already reviewed this campaign.")
 
         return attrs
+
+
+class ReviewListSerializer(serializers.ModelSerializer):
+    patient_full_name = serializers.CharField(source='patient.user.get_full_name', read_only=True)
+
+    class Meta:
+        model = CampaignReview
+        fields = ['patient_full_name', 'review_text', 'created_at']

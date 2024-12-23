@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import DoseBooking, CampaignReview
-from .serializers import DoseBookingSerializer, CampaignReviewSerializer, DoseViewSerializer
+from .serializers import DoseBookingSerializer, CampaignReviewSerializer, DoseViewSerializer, ReviewListSerializer
 from campaign.models import VaccineCampaign
 
 
@@ -73,3 +73,16 @@ class CampaignReviewCreateView(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(patient=self.request.user.patient_profile)
+
+
+class ReviewListView(generics.ListAPIView):
+    serializer_class = ReviewListSerializer
+
+    def get_queryset(self):
+        campaign_id = self.kwargs.get('pk')
+        try:
+            campaign = VaccineCampaign.objects.get(id=campaign_id)
+        except VaccineCampaign.DoesNotExist:
+            raise NotFound(detail="Campaign not found")
+
+        return CampaignReview.objects.filter(campaign=campaign)
