@@ -136,6 +136,7 @@ CORS_ORIGIN_WHITELIST = (
     'http://localhost:3000',
     'http://127.0.0.1:5500',
     'http://127.0.0.1',
+    'https://mrtuzzo.github.io/'
 )
 
 CORS_ALLOW_HEADERS = [
@@ -147,6 +148,7 @@ CSRF_TRUSTED_ORIGINS = [
     'http://localhost:3000',
     'https://your-frontend.vercel.app',
     'http://127.0.0.1:5500',
+    'https://mrtuzzo.github.io/'
 ]
 
 ROOT_URLCONF = 'VMS_DRF_2.urls'
