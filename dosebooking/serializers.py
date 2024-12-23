@@ -31,9 +31,12 @@ class DoseBookingSerializer(serializers.ModelSerializer):
 
 
 class DoseViewSerializer(serializers.ModelSerializer):
+    campaign = serializers.SerializerMethodField()
     class Meta:
         model = DoseBooking
         fields = ['id', 'patient', 'campaign', 'dose_number', 'dose_date', 'booked_at']
+    def get_campaign(self, obj):
+        return obj.campaign.campaign_name if obj.campaign else None
 
 
 class CampaignReviewSerializer(serializers.ModelSerializer):
