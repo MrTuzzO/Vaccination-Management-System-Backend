@@ -145,7 +145,7 @@ class PatientSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Patient
-        fields = ['user', 'nid', 'age', 'medical_info']
+        fields = ['user', 'id', 'nid', 'age', 'medical_info']
 
 
 class DoctorSerializer(serializers.ModelSerializer):
@@ -153,7 +153,7 @@ class DoctorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Doctor
-        fields = ['user', 'contact_number', 'hospital_name', 'speciality']
+        fields = ['user', 'id', 'contact_number', 'hospital_name', 'speciality']
 
 
 class UserProfileSerializer(serializers.Serializer):
