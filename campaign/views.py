@@ -16,9 +16,16 @@ class VaccineCampaignList(APIView):
         return Response(serializer.data)
 
     def post(self, request, format = None):
+        doctor_profile = getattr(request.user, "doctor_profile", None)
+        if not doctor_profile:
+            return Response(
+                {"detail": "Only doctors can create vaccine campaigns."},
+                status=status.HTTP_403_FORBIDDEN,
+            )
+
         serializer = VaccineCampaignSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(doctor=doctor_profile)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
