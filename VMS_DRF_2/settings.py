@@ -137,6 +137,8 @@ CORS_ORIGIN_WHITELIST = (
     'http://127.0.0.1:5500',
     'http://127.0.0.1',
     'https://mrtuzzo.github.io/',
+    'https://vaxcare.netlify.app/',
+    'https://dr-vaxcare.netlify.app/',
 )
 
 CORS_ALLOW_HEADERS = [
@@ -150,6 +152,8 @@ CSRF_TRUSTED_ORIGINS = [
     'http://127.0.0.1:5500',
     'https://mrtuzzo.github.io/',
     'http://127.0.0.1',
+    'https://vaxcare.netlify.app/',
+    'https://dr-vaxcare.netlify.app/',
 ]
 
 ROOT_URLCONF = 'VMS_DRF_2.urls'
