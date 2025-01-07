@@ -5,6 +5,7 @@ from rest_framework.views import APIView
 from .models import VaccineCampaign
 from .serializers import VaccineCampaignSerializer
 from .permissions import IsAuthorOrReadOnly, IsDoctor
+from rest_framework.permissions import IsAuthenticated
 
 
 class VaccineCampaignList(APIView):
@@ -58,3 +59,16 @@ class VaccineCampaignDetail(APIView):
         vaccine = self.get_object(pk)
         vaccine.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class DoctorCampaignList(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, format=None):
+        if request.user.user_type != 'doctor':
+            return Response({'detail': 'Permission Denied'}, status=403)
+
+        doctor = request.user.doctor_profile
+        campaigns = VaccineCampaign.objects.filter(doctor=doctor)
+        serializer = VaccineCampaignSerializer(campaigns, many=True)
+        return Response(serializer.data)
