@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import DoseBooking, CampaignReview
-
+from datetime import date
 
 class DoseBookingSerializer(serializers.ModelSerializer):
     dose_date = serializers.DateField(write_only=True)  # Ensure it's required in the input
@@ -27,6 +27,10 @@ class DoseBookingSerializer(serializers.ModelSerializer):
         if DoseBooking.objects.filter(patient=request.user.patient_profile, campaign=campaign).exists():
             raise serializers.ValidationError("You have already booked a dose for this campaign.")
 
+
+        # Ensure the selected date is not in the past
+        if dose_date <= date.today():
+            raise serializers.ValidationError("You must book at least one day in advance. Please select a future date.")
         return attrs
 
 
