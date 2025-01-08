@@ -7,7 +7,7 @@ class DoseBookingSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = DoseBooking
-        fields = ['id', 'patient', 'campaign', 'dose_number', 'dose_date', 'booked_at']
+        fields = ['id', 'campaign', 'dose_number', 'dose_date', 'booked_at']
         read_only_fields = ['dose_number', 'booked_at']
 
     def validate(self, attrs):
