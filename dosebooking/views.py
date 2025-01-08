@@ -1,6 +1,6 @@
 from datetime import timedelta
 from rest_framework import generics
-from rest_framework.exceptions import NotFound
+from rest_framework.exceptions import NotFound, ValidationError
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -19,6 +19,14 @@ class DoseBookingCreateView(APIView):
             campaign = serializer.validated_data['campaign']
             dose_date = serializer.validated_data['dose_date']
             patient = request.user.patient_profile
+
+            # Check available vaccines
+            if campaign.available_vaccines <= 0:
+                raise ValidationError("No vaccines available for this campaign.")
+
+            # Decrease available vaccines
+            campaign.available_vaccines -= 1
+            campaign.save()
 
             # Create the first dose booking
             first_booking = DoseBooking.objects.create(
